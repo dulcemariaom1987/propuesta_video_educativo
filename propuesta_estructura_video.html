@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta de Estructura – El Proceso Administrativo</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #0E1F87;
+    --rojo: #892432;
+    --dorado: #C9A646;
+    --gris: #2E2E2E;
+    --blanco: #FFFFFF;
+    --azul-light: #1a2fa0;
+    --dorado-light: #e0bc6a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #f0f2f8;
+    color: var(--gris);
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: linear-gradient(135deg, var(--azul) 0%, #081260 60%, var(--rojo) 100%);
+    padding: 60px 48px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    border: 60px solid rgba(201,166,70,.12);
+    top: -120px; right: -100px;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 30px solid rgba(255,255,255,.07);
+    bottom: -60px; left: 60px;
+  }
+  .cover-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 3px;
+    color: var(--dorado); text-transform: uppercase; margin-bottom: 18px;
+  }
+  .cover h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 38px; font-weight: 700; color: var(--blanco);
+    line-height: 1.15; margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+  .cover h1 span { color: var(--dorado); }
+  .cover .subtitle {
+    font-size: 13px; color: rgba(255,255,255,.65); font-weight: 400;
+    margin-bottom: 28px; letter-spacing: 0.3px;
+  }
+  .cover-meta {
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+  .meta-pill {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 11px; font-weight: 600; color: var(--blanco);
+    letter-spacing: 0.5px;
+  }
+  .meta-pill span { color: var(--dorado); margin-right: 4px; }
+
+  /* ── MAIN ── */
+  .main { max-width: 900px; margin: 0 auto; padding: 40px 24px 60px; }
+
+  /* Section headers */
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--azul);
+    margin-bottom: 6px;
+  }
+  .section-tag::before {
+    content: ''; display: block;
+    width: 20px; height: 2px; background: var(--dorado);
+  }
+
+  /* ── TIMELINE INTRO ── */
+  .timeline-bar {
+    background: var(--blanco);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 36px;
+    box-shadow: 0 2px 16px rgba(14,31,135,.07);
+    border-left: 4px solid var(--dorado);
+  }
+  .timeline-bar h3 {
+    font-size: 12px; font-weight: 700; color: var(--azul);
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px;
+  }
+  .tl-row {
+    display: flex; gap: 6px; align-items: stretch; flex-wrap: wrap;
+  }
+  .tl-block {
+    flex: 1; min-width: 80px;
+    border-radius: 8px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .tl-block.apertura { background: rgba(14,31,135,.1); border: 1.5px solid var(--azul); }
+  .tl-block.desarrollo { background: rgba(201,166,70,.12); border: 1.5px solid var(--dorado); }
+  .tl-block.cierre { background: rgba(137,36,50,.1); border: 1.5px solid var(--rojo); }
+  .tl-name { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+  .tl-time { font-size: 13px; font-weight: 700; }
+  .apertura .tl-name, .apertura .tl-time { color: var(--azul); }
+  .desarrollo .tl-name, .desarrollo .tl-time { color: #8a7220; }
+  .cierre .tl-name, .cierre .tl-time { color: var(--rojo); }
+  .tl-desc { font-size: 9px; color: #666; margin-top: 3px; }
+
+  /* ── SCENE CARDS ── */
+  .scene-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 36px;
+  }
+
+  .scene-card {
+    background: var(--blanco);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(14,31,135,.07);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+  }
+
+  .scene-preview {
+    min-height: 180px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 24px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .scene-preview.apertura-bg { background: linear-gradient(160deg, var(--azul) 0%, #152bb5 100%); }
+  .scene-preview.etapa-bg { background: linear-gradient(160deg, #1a1a2e 0%, var(--gris) 100%); }
+  .scene-preview.cierre-bg { background: linear-gradient(160deg, var(--rojo) 0%, #6b1520 100%); }
+
+  .scene-preview .frame-num {
+    position: absolute; top: 10px; left: 12px;
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    color: rgba(255,255,255,.4); text-transform: uppercase;
+  }
+  .scene-preview .time-badge {
+    position: absolute; top: 10px; right: 12px;
+    background: rgba(255,255,255,.12);
+    border-radius: 10px; padding: 3px 8px;
+    font-size: 9px; font-weight: 700; color: rgba(255,255,255,.8);
+  }
+
+  /* Mock screen elements */
+  .mock-title-bar {
+    width: 80%; height: 6px; border-radius: 3px;
+    background: var(--dorado); margin-bottom: 8px;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+  .mock-title-bar.thin { height: 4px; background: rgba(255,255,255,.4); width: 60%; margin-bottom: 5px; }
+  .mock-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 2px solid var(--dorado);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 10px;
+    background: rgba(201,166,70,.15);
+  }
+  .mock-dots {
+    display: flex; gap: 5px; margin-top: 8px;
+  }
+  .mock-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,.3);
+  }
+  .mock-dot.active { background: var(--dorado); }
+
+  .mock-cycle {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 90%;
+  }
+  .mock-cell {
+    background: rgba(255,255,255,.08);
+    border-radius: 6px; padding: 8px 6px; text-align: center;
+    border: 1px solid rgba(201,166,70,.3);
+  }
+  .mock-cell-icon { font-size: 14px; }
+  .mock-cell-label {
+    font-size: 7px; font-weight: 600; color: rgba(255,255,255,.6);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px;
+  }
+
+  .mock-meter {
+    width: 80%; margin-top: 8px;
+  }
+  .mock-meter-bar {
+    height: 3px; background: rgba(255,255,255,.15); border-radius: 2px; margin-bottom: 5px;
+    overflow: hidden;
+  }
+  .mock-meter-bar-fill {
+    height: 100%; background: var(--dorado); border-radius: 2px;
+  }
+
+  .mock-logo-area {
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .mock-logo-box {
+    width: 56px; height: 56px; background: rgba(255,255,255,.1);
+    border-radius: 12px; margin-bottom: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+
+  /* Scene content */
+  .scene-content {
+    padding: 22px 24px;
+  }
+  .scene-header {
+    display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px;
+  }
+  .scene-number {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800;
+  }
+  .sn-azul { background: var(--azul); color: var(--blanco); }
+  .sn-dorado { background: var(--dorado); color: var(--gris); }
+  .sn-rojo { background: var(--rojo); color: var(--blanco); }
+
+  .scene-title-area h3 {
+    font-size: 16px; font-weight: 700; color: var(--azul); margin-bottom: 2px;
+  }
+  .scene-title-area .scene-type {
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--dorado);
+  }
+
+  .scene-text {
+    font-size: 12.5px; line-height: 1.65; color: #555; margin-bottom: 14px;
+  }
+
+  .elements-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  .element-item {
+    background: #f5f6fb;
+    border-radius: 8px; padding: 8px 10px;
+    display: flex; align-items: flex-start; gap: 7px;
+  }
+  .el-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .el-label {
+    font-size: 10px; font-weight: 700; color: var(--azul);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px;
+  }
+  .el-desc { font-size: 11px; color: #666; line-height: 1.4; }
+
+  /* Etapas section */
+  .etapas-intro {
+    background: var(--blanco);
+    border-radius: 16px; padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 16px rgba(14,31,135,.07);
+  }
+  .etapas-intro p { font-size: 13px; line-height: 1.6; color: #555; }
+
+  .etapa-card {
+    background: var(--blanco);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(14,31,135,.07);
+    margin-bottom: 16px;
+    border-left: 4px solid var(--azul);
+  }
+  .etapa-header {
+    background: linear-gradient(90deg, rgba(14,31,135,.06) 0%, transparent 100%);
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid #eef0f8;
+  }
+  .etapa-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--azul); color: var(--blanco);
+    font-size: 12px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .etapa-header-text h4 { font-size: 14px; font-weight: 700; color: var(--azul); }
+  .etapa-header-text span { font-size: 10px; color: #888; font-weight: 500; }
+  .etapa-time-badge {
+    margin-left: auto; background: rgba(14,31,135,.08);
+    border-radius: 10px; padding: 3px 10px;
+    font-size: 10px; font-weight: 700; color: var(--azul);
+  }
+  .etapa-body {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  }
+  .etapa-locution {
+    padding: 14px 18px; border-right: 1px solid #eef0f8;
+  }
+  .etapa-visual {
+    padding: 14px 18px;
+  }
+  .etapa-col-label {
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--dorado); margin-bottom: 8px;
+  }
+  .etapa-locution p {
+    font-size: 12px; line-height: 1.6; color: #555; font-style: italic;
+  }
+  .visual-chips {
+    display: flex; flex-wrap: wrap; gap: 5px;
+  }
+  .chip {
+    background: #f0f2fb;
+    border-radius: 20px; padding: 4px 10px;
+    font-size: 10px; font-weight: 600; color: var(--azul);
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  /* Notes */
+  .notes-box {
+    background: linear-gradient(135deg, rgba(14,31,135,.05) 0%, rgba(201,166,70,.06) 100%);
+    border: 1px solid rgba(201,166,70,.3);
+    border-radius: 14px; padding: 22px 26px;
+    margin-bottom: 28px;
+  }
+  .notes-box h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+    color: var(--azul); margin-bottom: 14px;
+  }
+  .notes-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .notes-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 12.5px; color: #444; line-height: 1.5;
+  }
+  .notes-list li::before {
+    content: '◆'; color: var(--dorado); font-size: 8px;
+    margin-top: 5px; flex-shrink: 0;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center; padding: 20px;
+    font-size: 10px; color: #aaa; letter-spacing: 1px;
+    border-top: 1px solid #e0e4f0;
+  }
+  .footer strong { color: var(--azul); }
+
+  @media (max-width: 640px) {
+    .scene-card { grid-template-columns: 1fr; }
+    .scene-preview { min-height: 140px; }
+    .elements-grid { grid-template-columns: 1fr; }
+    .etapa-body { grid-template-columns: 1fr; }
+    .etapa-locution { border-right: none; border-bottom: 1px solid #eef0f8; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-label">Propuesta de Estructura · Video Educativo</div>
+  <h1>El Proceso<br><span>Administrativo</span></h1>
+  <div class="subtitle">Fundamentos de Administración — Nova Áurea Universidad</div>
+  <div class="cover-meta">
+    <div class="meta-pill"><span>⏱</span> 1:50 min aprox.</div>
+    <div class="meta-pill"><span>🎬</span> 3 Segmentos</div>
+    <div class="meta-pill"><span>📐</span> 4 Etapas + Apertura + Cierre</div>
+    <div class="meta-pill"><span>🎨</span> Identidad Nova Áurea</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- TIMELINE -->
+  <div class="timeline-bar">
+    <h3>📊 Línea de Tiempo General</h3>
+    <div class="tl-row">
+      <div class="tl-block apertura">
+        <div class="tl-name">Apertura</div>
+        <div class="tl-time">0:00 – 0:18</div>
+        <div class="tl-desc">Hook + título</div>
+      </div>
+      <div class="tl-block desarrollo" style="flex:3">
+        <div class="tl-name">Desarrollo</div>
+        <div class="tl-time">0:18 – 1:30</div>
+        <div class="tl-desc">Las 4 etapas (~18 seg c/u)</div>
+      </div>
+      <div class="tl-block cierre">
+        <div class="tl-name">Cierre</div>
+        <div class="tl-time">1:30 – 1:50</div>
+        <div class="tl-desc">Síntesis + logo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 1: APERTURA -->
+  <div class="section-tag">Segmento 1</div>
+  <h2 style="font-family:Georgia,serif;font-size:22px;color:var(--azul);margin-bottom:18px;">Apertura</h2>
+
+  <div class="scene-grid">
+    <!-- Escena 1 -->
+    <div class="scene-card">
+      <div class="scene-preview apertura-bg">
+        <div class="frame-num">ESC. 01</div>
+        <div class="time-badge">0:00 – 0:08</div>
+        <div class="mock-icon">🏛️</div>
+        <div class="mock-title-bar"></div>
+        <div class="mock-title-bar thin"></div>
+        <div class="mock-dots">
+          <div class="mock-dot active"></div>
+          <div class="mock-dot"></div>
+          <div class="mock-dot"></div>
+        </div>
+      </div>
+      <div class="scene-content">
+        <div class="scene-header">
+          <div class="scene-number sn-azul">1</div>
+          <div class="scene-title-area">
+            <div class="scene-type">Apertura · Hook</div>
+            <h3>Introducción con impacto</h3>
+          </div>
+        </div>
+        <p class="scene-text">Fondo oscuro (#2E2E2E o azul profundo). Aparece una pregunta retórica animada con efecto de escritura (<em>typewriter</em>) que captura la atención inmediata del estudiante.</p>
+        <div class="elements-grid">
+          <div class="element-item">
+            <div class="el-icon">✍️</div>
+            <div>
+              <div class="el-label">Texto</div>
+              <div class="el-desc">"¿Qué hace que una organización funcione?" — efecto typewriter, Bodoni, dorado.</div>
+            </div>
+          </div>
+          <div class="element-item">
+            <div class="el-icon">🎬</div>
+            <div>
+              <div class="el-label">Animación</div>
+              <div class="el-desc">Texto aparece letra por letra. Fondo con partículas sutiles en azul profundo.</div>
+            </div>
+          </div>
+          <div class="element-item">
+            <div class="el-icon">🔊</div>
+            <div>
+              <div class="el-label">Audio</div>
+              <div class="el-desc">Música de fondo instrumental — tono corporativo/moderno, entrada suave.</div>
+            </div>
+          </div>
+          <div class="element-item">
+            <div class="el-icon">🎨</div>
+            <div>
+              <div class="el-label">Color</div>
+              <div class="el-desc">BG: #0E1F87 · Texto: #C9A646 · Acento: #892432</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Escena 2 -->
+    <div class="scene-card">
+      <div class="scene-preview apertura-bg">
+        <div class="frame-num">ESC. 02</div>
+        <div class="time-badge">0:08 – 0:18</div>
+        <div class="mock-logo-area">
+          <div class="mock-logo-box">🎓</div>
+          <div class="mock-title-bar" style="width:70%"></div>
+          <div class="mock-title-bar thin" style="width:50%"></div>
+        </div>
+      </div>
+      <div class="scene-content">
+        <div class="scene-header">
+          <div class="scene-number sn-azul">2</div>
+          <div class="scene-title-area">
+            <div class="scene-type">Apertura · Título</div>
+            <h3>Presentación del tema</h3>
+          </div>
+        </div>
+        <p class="scene-text">Transición con barrido o fade. Aparece el título del curso con el logo de Nova Áurea y el tema central. Establece el tono académico e institucional del video.</p>
+        <div class="elements-grid">
+          <div class="element-item">
+            <div class="el-icon">🏷️</div>
+            <div>
+              <div class="el-label">Texto</div>
+              <div class="el-desc">Título: "El Proceso Administrativo" (Bodoni, grande, blanco). Subtítulo: "Fundamentos de Administración" (Montserrat, dorado).</div>
+            </div>
+          </div>
+          <div class="element-item">
+            <div class="el-icon">🖼️</div>
+            <div>
+              <div class="el-label">Imagen/Logo</div>
+              <div class="el-desc">Logo Nova Áurea con animación de fade-in suave. Línea separadora dorada animada.</div>
+            </div>
+          </div>
+          <div class="element-item">
+            <div class="el-icon">✨</div>
+            <div>
+              <div class="el-label">Animación</div>
+              <div class="el-desc">Elementos entran con slide-up escalonado. Brillo sutil en línea dorada.</div>
+            </div>
+          </div>
+          <div class="element-item">
+            <div class="el-icon">🌐</div>
+            <div>
+              <div class="el-label">Íconos</div>
+              <div class="el-desc">Ícono abstracto de organigrama o red de nodos en fondo semitransparente.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: DESARROLLO -->
+  <div class="section-tag">Segmento 2</div>
+  <h2 style="font-family:Georgia,serif;font-size:22px;color:var(--azul);margin-bottom:10px;">Desarrollo — Las 4 Etapas</h2>
+
+  <div class="etapas-intro">
+    <p>Cada etapa sigue una <strong>estructura visual consistente</strong>: número + nombre aparece como tarjeta animada (slide-in lateral), seguido del ícono representativo y la descripción en Montserrat. Las 4 tarjetas se construyen secuencialmente para crear sensación de ciclo continuo. Al finalizar las 4, se muestra brevemente el ciclo completo en pantalla.</p>
+  </div>
+
+  <!-- Etapa 1 -->
+  <div class="etapa-card">
+    <div class="etapa-header">
+      <div class="etapa-num">1</div>
+      <div class="etapa-header-text">
+        <h4>📋 Planeación</h4>
+        <span>Definir objetivos y estrategias</span>
+      </div>
+      <div class="etapa-time-badge">0:18 – 0:36</div>
+    </div>
+    <div class="etapa-body">
+      <div class="etapa-locution">
+        <div class="etapa-col-label">🎙 Locución sugerida</div>
+        <p>"La planeación es el punto de partida: definir a dónde vamos, qué queremos lograr y cómo vamos a hacerlo."</p>
+      </div>
+      <div class="etapa-visual">
+        <div class="etapa-col-label">🖥 En pantalla</div>
+        <div class="visual-chips">
+          <div class="chip">📋 Ícono mapa/brújula</div>
+          <div class="chip">✏️ Texto animado</div>
+          <div class="chip">→ Flecha de acción</div>
+          <div class="chip">🔵 Card azul profundo</div>
+          <div class="chip">BG oscuro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Etapa 2 -->
+  <div class="etapa-card" style="border-left-color:var(--dorado)">
+    <div class="etapa-header">
+      <div class="etapa-num" style="background:var(--dorado);color:var(--gris)">2</div>
+      <div class="etapa-header-text">
+        <h4>🗂 Organización</h4>
+        <span>Distribuir funciones y responsabilidades</span>
+      </div>
+      <div class="etapa-time-badge">0:36 – 0:54</div>
+    </div>
+    <div class="etapa-body">
+      <div class="etapa-locution">
+        <div class="etapa-col-label">🎙 Locución sugerida</div>
+        <p>"Organizar significa distribuir el trabajo: quién hace qué, con qué recursos y bajo qué estructura."</p>
+      </div>
+      <div class="etapa-visual">
+        <div class="etapa-col-label">🖥 En pantalla</div>
+        <div class="visual-chips">
+          <div class="chip">🗂 Ícono organigrama</div>
+          <div class="chip">📦 Bloques animados</div>
+          <div class="chip">↔ Conexiones entre nodos</div>
+          <div class="chip">🟡 Acento dorado</div>
+          <div class="chip">Líneas de conexión</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Etapa 3 -->
+  <div class="etapa-card" style="border-left-color:#4a6bdb">
+    <div class="etapa-header">
+      <div class="etapa-num" style="background:#4a6bdb">3</div>
+      <div class="etapa-header-text">
+        <h4>🧭 Dirección</h4>
+        <span>Guiar, motivar y coordinar el equipo</span>
+      </div>
+      <div class="etapa-time-badge">0:54 – 1:12</div>
+    </div>
+    <div class="etapa-body">
+      <div class="etapa-locution">
+        <div class="etapa-col-label">🎙 Locución sugerida</div>
+        <p>"La dirección pone al equipo en movimiento: liderar, motivar y asegurarse de que todo funcione como se planeó."</p>
+      </div>
+      <div class="etapa-visual">
+        <div class="etapa-col-label">🖥 En pantalla</div>
+        <div class="visual-chips">
+          <div class="chip">🧭 Ícono liderazgo</div>
+          <div class="chip">👥 Siluetas de equipo</div>
+          <div class="chip">⬆ Flecha ascendente</div>
+          <div class="chip">🔵 Tono azul claro</div>
+          <div class="chip">Pulso/latido visual</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Etapa 4 -->
+  <div class="etapa-card" style="border-left-color:var(--rojo);margin-bottom:36px">
+    <div class="etapa-header">
+      <div class="etapa-num" style="background:var(--rojo)">4</div>
+      <div class="etapa-header-text">
+        <h4>📊 Control</h4>
+        <span>Seguimiento, desviaciones y mejora continua</span>
+      </div>
+      <div class="etapa-time-badge">1:12 – 1:30</div>
+    </div>
+    <div class="etapa-body">
+      <div class="etapa-locution">
+        <div class="etapa-col-label">🎙 Locución sugerida</div>
+        <p>"El control cierra el ciclo: medir resultados, detectar desviaciones y tomar acciones correctivas para mejorar."</p>
+      </div>
+      <div class="etapa-visual">
+        <div class="etapa-col-label">🖥 En pantalla</div>
+        <div class="visual-chips">
+          <div class="chip">📊 Ícono gráfico de barras</div>
+          <div class="chip">✅ Check animado</div>
+          <div class="chip">🔴 Acento rojo vino</div>
+          <div class="chip">📈 Curva de mejora</div>
+          <div class="chip">Loop circular</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: CIERRE -->
+  <div class="section-tag">Segmento 3</div>
+  <h2 style="font-family:Georgia,serif;font-size:22px;color:var(--azul);margin-bottom:18px;">Cierre</h2>
+
+  <div class="scene-grid">
+    <!-- Escena cierre 1 -->
+    <div class="scene-card">
+      <div class="scene-preview cierre-bg">
+        <div class="frame-num">ESC. 07</div>
+        <div class="time-badge">1:30 – 1:42</div>
+        <div class="mock-cycle">
+          <div class="mock-cell"><div class="mock-cell-icon">📋</div><div class="mock-cell-label">Planear</div></div>
+          <div class="mock-cell"><div class="mock-cell-icon">🗂</div><div class="mock-cell-label">Organizar</div></div>
+          <div class="mock-cell"><div class="mock-cell-icon">🧭</div><div class="mock-cell-label">Dirigir</div></div>
+          <div class="mock-cell"><div class="mock-cell-icon">📊</div><div class="mock-cell-label">Controlar</div></div>
+        </div>
+      </div>
+      <div class="scene-content">
+        <div class="scene-header">
+          <div class="scene-number sn-rojo">7</div>
+          <div class="scene-title-area">
+            <div class="scene-type">Cierre · Síntesis Visual</div>
+            <h3>El ciclo completo</h3>
+          </div>
+        </div>
+        <p class="scene-text">Las 4 tarjetas de etapas aparecen simultáneamente en pantalla, formando un ciclo circular o cuadrícula 2×2. Un ícono de flecha circular las une, enfatizando el carácter cíclico del proceso.</p>
+        <div class="elements-grid">
+          <div class="element-item">
+            <div class="el-icon">🔄</div>
+            <div>
+              <div class="el-label">Animación</div>
+              <div class="el-desc">Cuatro tarjetas entran con stagger, luego aparece flecha circular que las une.</div>
+            </div>
+          </div>
+          <div class="element-item">
+            <div class="el-icon">🏷️</div>
+            <div>
+              <div class="el-label">Texto</div>
+              <div class="el-desc">"Planear · Organizar · Dirigir · Controlar" — Montserrat bold, blanco sobre oscuro.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Escena cierre 2 -->
+    <div class="scene-card">
+      <div class="scene-preview cierre-bg">
+        <div class="frame-num">ESC. 08</div>
+        <div class="time-badge">1:42 – 1:50</div>
+        <div class="mock-logo-area">
+          <div class="mock-logo-box">🎓</div>
+          <div class="mock-title-bar" style="width:65%;background:rgba(201,166,70,.7)"></div>
+          <div class="mock-title-bar thin" style="margin-top:6px"></div>
+          <div class="mock-meter" style="margin-top:12px">
+            <div class="mock-meter-bar"><div class="mock-meter-bar-fill" style="width:80%"></div></div>
+            <div class="mock-meter-bar"><div class="mock-meter-bar-fill" style="width:60%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="scene-content">
+        <div class="scene-header">
+          <div class="scene-number sn-rojo">8</div>
+          <div class="scene-title-area">
+            <div class="scene-type">Cierre · Mensaje Final</div>
+            <h3>Llamado a reflexión + logo</h3>
+          </div>
+        </div>
+        <p class="scene-text">Fundido a fondo oscuro o azul profundo. Aparece el mensaje de cierre del guion con el logo de Nova Áurea en posición prominente. La música baja suavemente hasta terminar.</p>
+        <div class="elements-grid">
+          <div class="element-item">
+            <div class="el-icon">💬</div>
+            <div>
+              <div class="el-label">Texto</div>
+              <div class="el-desc">"Cuando las etapas se aplican correctamente, las organizaciones logran sus metas con eficiencia." — Montserrat, blanco.</div>
+            </div>
+          </div>
+          <div class="element-item">
+            <div class="el-icon">🏫</div>
+            <div>
+              <div class="el-label">Logo</div>
+              <div class="el-desc">Nova Áurea Universidad — fade-in central. Tagline opcional en dorado suave.</div>
+            </div>
+          </div>
+          <div class="element-item">
+            <div class="el-icon">🎵</div>
+            <div>
+              <div class="el-label">Audio</div>
+              <div class="el-desc">Música baja gradualmente (fade-out) hasta silencio total en el logo.</div>
+            </div>
+          </div>
+          <div class="element-item">
+            <div class="el-icon">⬛</div>
+            <div>
+              <div class="el-label">Fade</div>
+              <div class="el-desc">Fade to black final de 1 segundo. Limpio y formal.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTAS TÉCNICAS -->
+  <div class="notes-box">
+    <h3>🛠 Notas Técnicas y de Producción</h3>
+    <ul class="notes-list">
+      <li><strong>Tipografía:</strong> Bodoni para todos los títulos principales. Montserrat (Regular/SemiBold) para cuerpos de texto, subtítulos y etiquetas. Ambas refuerzan el perfil académico y premium de Nova Áurea.</li>
+      <li><strong>Paleta aplicada:</strong> Fondo principal en Azul profundo (#0E1F87) o Gris oscuro (#2E2E2E). Los acentos y números de etapa en Dorado suave (#C9A646). Los llamados a acción y cierre en Rojo vino (#892432). Texto siempre en Blanco (#FFFFFF).</li>
+      <li><strong>Duración objetivo:</strong> 1 minuto 50 segundos. Las 4 etapas del desarrollo tienen ~18 segundos cada una, lo que permite locución clara sin saturar al espectador.</li>
+      <li><strong>Formato recomendado:</strong> 1920×1080 px (16:9). Animaciones en After Effects o herramienta similar. Exportar en H.264/MP4.</li>
+      <li><strong>Valores reflejados:</strong> <em>Innovación</em> → transiciones dinámicas y tipografía moderna. <em>Excelencia</em> → paleta refinada, composición limpia. <em>Tecnología</em> → íconos digitales, partículas, estética motion graphics. <em>Proyección global</em> → escala visual, idioma neutro y tono formal.</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="footer">
+  Propuesta estructurada por <strong>Editor de Video</strong> · Nova Áurea Universidad · Fundamentos de Administración
+</div>
+
+</body>
+</html>
